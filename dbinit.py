@@ -3,17 +3,16 @@ import sys
 
 import psycopg2 as dbapi2
 
-
 INIT_STATEMENTS = [
     "CREATE TABLE IF NOT EXISTS migration_version (version INTEGER)",
 ]
 
 MIGRATIONS = [
+    ["create table test (asd INTEGER)"], ["drop table test"],
     [
-        "CREATE TABLE test (asd INTEGER)"
-    ],
-    [
-        "DROP TABLE test"
+        "create table test_a (id SERIAL PRIMARY KEY, a INTEGER, b_id INTEGER)",
+        "create table test_b (id SERIAL PRIMARY KEY, b INTEGER)",
+        "alter table test_a add constraint test_a_to_test_b foreign key (b_id) references test_b (id)"
     ]
 ]
 
@@ -26,8 +25,10 @@ def current_version(cursor):
         return 0
     return result[0][0]
 
+
 def inc_version(cursor):
     cursor.execute("UPDATE migration_version SET version = version + 1")
+
 
 def initialize(url):
     with dbapi2.connect(url) as connection:
