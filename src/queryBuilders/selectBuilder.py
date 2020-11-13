@@ -1,25 +1,3 @@
-import os
-import sys
-import psycopg2 as dbapi2
-
-
-class QueryBuilder:
-    def __init__(self):
-        url = os.getenv("DATABASE_URL")
-        cursor = dbapi2.connect(url).cursor()
-        self.data = {"cursor": cursor}
-
-    def Select(self, table, asName, cols):
-        self.data["method"] = "SELECT"
-        self.data["cols"] = cols
-        self.data["table"] = table
-        self.data["joins"] = []
-        self.data["accessories"] = []
-        self.data["shid"] = asName
-        self.data["where"] = []
-        return SelectBuilder(self.data)
-
-
 class BuiltSelectBuilder:
     def __init__(self, data, q):
         self.data = data
@@ -136,6 +114,13 @@ class SelectBuilder:
                     parts.append(") ")
                     p_oppened = False
                 else:
+                    # type modification
+                    for key in w[2]:
+                        if isinstance(w[2][key], int) or isinstance(
+                                w[2][key], float):
+                            w[2][key] = str(w[2][key])
+                        else:
+                            w[2][key] = f"'{w[2][key]}'"
                     if not p_oppened:
                         parts.append("AND " if w[0] else "OR ")
                     parts.append(f'({w[1].format(**w[2])}) ')
@@ -149,23 +134,13 @@ class SelectBuilder:
         self.data["outCols"] = outCols
         return BuiltSelectBuilder(self.data, "".join(parts))
 
+    def Execute(self):
+        return self.Build().Execute()
 
-
-QueryBuilder() \
-    .Select("test_a", "ta", ["id", "a", "b_id"]) \
-    .InnerJoin("test_b", "tb", ["id", "b"], "ta.b_id = tb.id") \
-    .Build() \
-    .Explain() \
-    .Execute() \
 
 # QueryBuilder() \
-#     .Select("migration_version", "m", ["version"]) \
-#     .AndWhere( "m.version = {ver}", {
-#         "ver": "2"
-#     }) \
-#     .AndWhere("1 = 1") \
-#     .OrderBy([("m.version", "ASC")]) \
-#     .Limit(1) \
+#     .Select("test_a", "ta", ["id", "a", "b_id"]) \
+#     .InnerJoin("test_b", "tb", ["id", "b"], "ta.b_id = tb.id") \
 #     .Build() \
 #     .Explain() \
-#     .Execute()
+#     .Execute() \
