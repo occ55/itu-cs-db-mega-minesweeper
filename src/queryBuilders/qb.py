@@ -1,10 +1,10 @@
 import os
 import sys
 import psycopg2 as dbapi2
-from selectBuilder import *
-from insertBuilder import *
-from deleteBuilder import *
-from updateBuilder import *
+from .selectBuilder import *
+from .insertBuilder import *
+from .deleteBuilder import *
+from .updateBuilder import *
 
 url = os.getenv("DATABASE_URL")
 connection = dbapi2.connect(url)
@@ -46,10 +46,10 @@ class QueryBuilder:
         return UpdateBuilder(self.data)
 
 
-#QueryBuilder().Update("test_b", ["b = b + 1"]).AndWhere("id = 1").Execute()
+# QueryBuilder().Update("test_b", ["b = b + 1"]).AndWhere("id = 1").Execute()
 
-#QueryBuilder().Insert("test_b", {"b": 10}).Execute()
-#QueryBuilder().Delete("test_b").AndWhere("b > 2").Execute()
+# QueryBuilder().Insert("test_b", {"b": 10}).Execute()
+# QueryBuilder().Delete("test_b").AndWhere("b > 2").Execute()
 
 # QueryBuilder() \
 #     .Select("migration_version", "m", ["version"]) \

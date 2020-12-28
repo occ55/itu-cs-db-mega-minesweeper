@@ -8,7 +8,7 @@ async function Main() {
   const gameView = document.getElementById("game-view");
 
   for (let k = 0; k < 10000; k++) {
-    gameView.appendChild(await createTile());
+    //gameView.appendChild(await createTile());
   }
 }
 

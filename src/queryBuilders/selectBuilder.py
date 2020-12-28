@@ -24,8 +24,14 @@ class BuiltSelectBuilder:
                         mainObj[colParts[0]] = {}
                     mainObj[colParts[0]][colParts[1]] = result[k]
             objs.append(mainObj)
-            print(mainObj)
         return objs
+
+    def ExecuteOne(self):
+        result = self.Execute()
+        if len(result) > 0:
+            return result[0]
+        else:
+            return None
 
 
 class SelectBuilder:
@@ -64,12 +70,9 @@ class SelectBuilder:
         return self
 
     def InnerJoin(self, table, asName, cols, on):
-        self.data["joins"].append({
-            "table": table,
-            "shid": asName,
-            "cols": cols,
-            "on": on
-        })
+        self.data["joins"].append(
+            {"table": table, "shid": asName, "cols": cols, "on": on}
+        )
         return self
 
     def Build(self):
@@ -82,17 +85,17 @@ class SelectBuilder:
         for col in self.data["cols"]:
             colName = f'{self.data["shid"]}.{col}'
             outCols.append(colName)
-            selectParts.append(f'{colName}')
+            selectParts.append(f"{colName}")
 
         # Select columns from joins
         for join in self.data["joins"]:
             for col in join["cols"]:
                 colName = f'{join["shid"]}.{col}'
                 outCols.append(colName)
-                selectParts.append(f'{colName}')
+                selectParts.append(f"{colName}")
 
         selectPartsStr = ",\n".join(selectParts)
-        parts.append(f'{selectPartsStr}\n')
+        parts.append(f"{selectPartsStr}\n")
         # From
         parts.append(f'FROM {self.data["table"]} as {self.data["shid"]}\n')
 
@@ -104,7 +107,7 @@ class SelectBuilder:
 
         # Where
         if len(self.data["where"]) > 0:
-            parts.append(f'WHERE ( ')
+            parts.append(f"WHERE ( ")
             p_oppened = True
             for w in self.data["where"]:
                 if w == 0:
@@ -116,26 +119,28 @@ class SelectBuilder:
                 else:
                     # type modification
                     for key in w[2]:
-                        if isinstance(w[2][key], int) or isinstance(
-                                w[2][key], float):
+                        if isinstance(w[2][key], int) or isinstance(w[2][key], float):
                             w[2][key] = str(w[2][key])
                         else:
                             w[2][key] = f"'{w[2][key]}'"
                     if not p_oppened:
                         parts.append("AND " if w[0] else "OR ")
-                    parts.append(f'({w[1].format(**w[2])}) ')
+                    parts.append(f"({w[1].format(**w[2])}) ")
                     p_oppened = False
             parts.append(")\n")
 
         # Accessories
         for ac in self.data["accessories"]:
-            parts.append(f'{ac}\n')
+            parts.append(f"{ac}\n")
 
         self.data["outCols"] = outCols
         return BuiltSelectBuilder(self.data, "".join(parts))
 
     def Execute(self):
         return self.Build().Execute()
+
+    def ExecuteOne(self):
+        return self.Build().ExecuteOne()
 
 
 # QueryBuilder() \

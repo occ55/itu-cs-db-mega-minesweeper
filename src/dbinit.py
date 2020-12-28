@@ -8,13 +8,25 @@ INIT_STATEMENTS = [
 ]
 
 MIGRATIONS = [
-    ["create table test (asd INTEGER)"],
-    ["drop table test"],
+    [open("./src/migrations/initial_db.sql").read()],
     [
-        "create table test_a (id SERIAL PRIMARY KEY, a INTEGER, b_id INTEGER)",
-        "create table test_b (id SERIAL PRIMARY KEY, b INTEGER)",
-        "alter table test_a add constraint test_a_to_test_b foreign key (b_id) references test_b (id)",
+        """
+ALTER TABLE users
+ALTER COLUMN username TYPE character varying(255),
+ALTER COLUMN password TYPE character varying(255);
+
+ALTER TABLE sessions
+ALTER COLUMN session_id TYPE character varying(255);
+
+ALTER TABLE competitions
+ALTER COLUMN title TYPE character varying(255),
+ALTER COLUMN password TYPE character varying(255);
+
+ALTER TABLE chunks
+ALTER COLUMN data TYPE character varying(255);
+"""
     ],
+    ["ALTER TABLE users ADD CONSTRAINT usernameunique UNIQUE (username);"],
 ]
 
 
@@ -22,13 +34,13 @@ def current_version(cursor):
     cursor.execute("SELECT version FROM migration_version")
     result = cursor.fetchall()
     if len(result) == 0:
-        cursor.execute("INSERT INTO migration_version VALUES (0)")
+        cursor.execute('INSERT INTO "migration_version" VALUES (0)')
         return 0
     return result[0][0]
 
 
 def inc_version(cursor):
-    cursor.execute("UPDATE migration_version SET version = version + 1")
+    cursor.execute('UPDATE public."migration_version" SET version = version + 1')
 
 
 def initialize(url):
@@ -36,11 +48,15 @@ def initialize(url):
         cursor = connection.cursor()
         for statement in INIT_STATEMENTS:
             cursor.execute(statement)
+            connection.commit()
         version = current_version(cursor)
+        connection.commit()
         for k in range(version, len(MIGRATIONS)):
             for q in MIGRATIONS[k]:
                 cursor.execute(q)
+                connection.commit()
             inc_version(cursor)
+            connection.commit()
         cursor.close()
 
 

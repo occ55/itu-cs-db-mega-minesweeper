@@ -27,11 +27,11 @@ class UpdateBuilder:
             setParts.append(sline)
         setPartsStr = ",\n".join(setParts)
 
-        parts.append(f'{setPartsStr}\n')
+        parts.append(f"{setPartsStr}\n")
 
         # Where
         if len(self.data["where"]) > 0:
-            parts.append(f'WHERE ( ')
+            parts.append(f"WHERE ( ")
             p_oppened = True
             for w in self.data["where"]:
                 if w == 0:
@@ -43,14 +43,13 @@ class UpdateBuilder:
                 else:
                     # type modification
                     for key in w[2]:
-                        if isinstance(w[2][key], int) or isinstance(
-                                w[2][key], float):
+                        if isinstance(w[2][key], int) or isinstance(w[2][key], float):
                             w[2][key] = str(w[2][key])
                         else:
                             w[2][key] = f"'{w[2][key]}'"
                     if not p_oppened:
                         parts.append("AND " if w[0] else "OR ")
-                    parts.append(f'({w[1].format(**w[2])}) ')
+                    parts.append(f"({w[1].format(**w[2])}) ")
                     p_oppened = False
             parts.append(")\n")
 

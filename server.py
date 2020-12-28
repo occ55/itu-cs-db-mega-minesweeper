@@ -1,13 +1,8 @@
-from flask import Flask
-from flask import render_template
-
-app = Flask(__name__, static_folder="./static")
+from src.init import app
 
 
-@app.route("/")
-def home_page():
-    return render_template("hello.html", name="test", data={})
-
+from src.api.pages import *
+from src.api.auth import *
 
 if __name__ == "__main__":
     app.run()
