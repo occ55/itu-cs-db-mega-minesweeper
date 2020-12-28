@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, make_response
 from ..queryBuilders.qb import QueryBuilder
 import hashlib
 import os, binascii
+from ..utils import *
 
 
 @app.route("/api/login", methods=["POST"])
@@ -73,3 +74,15 @@ def logout():
     resp = make_response(jsonify({}))
     resp.set_cookie("session_id", "", expires=0)
     return resp
+
+
+@app.route("/api/me", methods=["GET", "POST"])
+@login_required
+def me(user_id):
+    user = (
+        QueryBuilder()
+        .Select("users", "u", ["username", "id", "elo"])
+        .AndWhere("u.id = {id}", {"id": user_id})
+        .ExecuteOne()
+    )
+    return jsonify(user)
