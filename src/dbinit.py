@@ -8,12 +8,13 @@ INIT_STATEMENTS = [
 ]
 
 MIGRATIONS = [
-    ["create table test (asd INTEGER)"], ["drop table test"],
+    ["create table test (asd INTEGER)"],
+    ["drop table test"],
     [
         "create table test_a (id SERIAL PRIMARY KEY, a INTEGER, b_id INTEGER)",
         "create table test_b (id SERIAL PRIMARY KEY, b INTEGER)",
-        "alter table test_a add constraint test_a_to_test_b foreign key (b_id) references test_b (id)"
-    ]
+        "alter table test_a add constraint test_a_to_test_b foreign key (b_id) references test_b (id)",
+    ],
 ]
 
 

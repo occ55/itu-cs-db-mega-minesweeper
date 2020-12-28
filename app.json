@@ -1,10 +1,7 @@
 {
-    "addons": [
-        {
-            "plan": "heroku-postgresql"
-        },
-        {
-            "plan": "heroku-redis"
-        }
-    ]
+  "addons": [
+    {
+      "plan": "heroku-postgresql"
+    }
+  ]
 }
