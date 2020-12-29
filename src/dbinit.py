@@ -30,6 +30,9 @@ ALTER COLUMN data TYPE character varying(255);
     ["ALTER TABLE competitions ADD CONSTRAINT titleunique UNIQUE (title);"],
     ["ALTER TABLE chunks ALTER COLUMN data TYPE character varying(512);"],
     ["ALTER TABLE chunks ADD COLUMN cdata character varying(512);"],
+    ["ALTER TABLE event_log DROP COLUMN user_id;"],
+    ["ALTER TABLE user_entries ADD COLUMN last_ability_used bigint;"],
+    ["ALTER TABLE competitions ADD COLUMN is_done integer;"],
 ]
 
 

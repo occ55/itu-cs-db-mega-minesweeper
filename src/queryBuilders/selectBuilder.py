@@ -121,6 +121,8 @@ class SelectBuilder:
                     for key in w[2]:
                         if isinstance(w[2][key], int) or isinstance(w[2][key], float):
                             w[2][key] = str(w[2][key])
+                        elif w[2][key] is None:
+                            w[2][key] = "null"
                         else:
                             w[2][key] = f"'{w[2][key]}'"
                     if not p_oppened:

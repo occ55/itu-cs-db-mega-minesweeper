@@ -18,11 +18,17 @@ def login():
         .ExecuteOne()
     )
     old_session = request.cookies.get("session_id")
+    print(old_session)
     resp = make_response(jsonify({}))
     if user is not None:
         if old_session is None:
             session_id = binascii.b2a_hex(os.urandom(32)).decode("utf-8")
             resp.set_cookie("session_id", session_id)
+            QueryBuilder().Insert(
+                "sessions",
+                {"session_id": session_id, "user_id": user["id"]},
+                False,
+            ).Execute()
         else:
             session_record = (
                 QueryBuilder()

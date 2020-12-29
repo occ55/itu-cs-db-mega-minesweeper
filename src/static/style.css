@@ -38,7 +38,14 @@
 }
 
 .t-c {
-    background-color: #f5f5f5;
+    background-color: red;
+    background-image: url("flag.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.t-m {
+    background-color: green;
     background-image: url("flag.png");
     background-repeat: no-repeat;
     background-size: cover;

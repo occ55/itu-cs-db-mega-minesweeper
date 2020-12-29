@@ -1,0 +1,32 @@
+{% extends "mainLayout.html" %}
+{% block content %}
+  
+      <table>
+        <thead>
+          <tr>
+              <th>Username</th>
+              <th>Elo</th>
+          </tr>
+        </thead>
+
+        <tbody id="global_leaderboard">
+          
+        </tbody>
+      </table>
+  
+  <script>
+    const tb = document.querySelector("#global_leaderboard");
+    async function lb_load() {
+      const users = await req("/api/global_leaderboard", {});
+      users.sort((a,b) => b.elo - a.elo);
+      for(const user of users) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${user.username}</td> <td>${user.elo}</td>`;
+        tb.appendChild(tr);
+      }
+    }
+
+    lb_load().catch(console.log)
+  </script>
+
+{% endblock %}

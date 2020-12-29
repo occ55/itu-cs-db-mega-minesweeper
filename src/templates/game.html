@@ -1,0 +1,30 @@
+{% extends "mainLayout.html" %}
+{% block content %}
+
+  <div id="game-view"></div>
+  
+  <div style="margin-top: 30px; margin-left: 30px;">
+  <a class="waves-effect waves-light btn" id="activate">Activate</a>
+  
+
+      <table>
+        <thead>
+          <tr>
+              <th>Username</th>
+              <th>Score</th>
+              <th>Mines Hit</th>
+          </tr>
+        </thead>
+
+        <tbody id="leaderboard_table">
+        </tbody>
+      </table>
+  
+  </div>
+  
+  <script>
+    window.competition_id = "{{data.competition_id}}"
+  </script>
+  <script src="/static/game.js"></script>
+
+{% endblock %}

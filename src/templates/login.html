@@ -19,9 +19,28 @@
   
   <div class="row">
     <div class="col s3"></div>
-    <a class="waves-effect waves-light btn col s2">Login</a>
+    <a class="waves-effect waves-light btn col s2" id="login_btn">Login</a>
     <div class="col s2"></div>
-    <a class="waves-effect waves-light btn col s2">Register</a>
+    <a class="waves-effect waves-light btn col s2" id="register_btn">Register</a>
   </div>
+
+  <script>
+    const login_b = document.querySelector("#login_btn");
+    const register_b = document.querySelector("#register_btn");
+
+    const username_in = document.querySelector("#username");
+    const password_in = document.querySelector("#password")
+
+    login_b.addEventListener("click", async () => {
+      await req("/api/login", {username: username_in.value, password: password_in.value});
+      window.location.href = "/"
+    })
+
+    register_b.addEventListener("click", async () => {
+      await req("/api/register", {username: username_in.value, password: password_in.value});
+      window.location.href = "/"
+    })
+
+  </script>
 
 {% endblock %}
