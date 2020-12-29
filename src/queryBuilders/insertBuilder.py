@@ -11,18 +11,20 @@ class InsertBuilder:
         for key in values:
             if isinstance(values[key], int) or isinstance(values[key], float):
                 values[key] = str(values[key])
+            elif values[key] is None:
+                values[key] = "null"
             else:
                 values[key] = f"'{values[key]}'"
 
         for key in values:
-            keyParts.append(key)
+            keyParts.append(f'"{key}"')
         parts.append(f'{",".join(keyParts)}) VALUES (')
         for key in values:
             valParts.append(values[key])
         parts.append(f'{",".join(valParts)}) ')
 
         if self.data["retId"]:
-            parts.append(f'RETURNING id')
+            parts.append(f"RETURNING id")
         return BuiltInsertBuilder(self.data, "".join(parts))
 
     def Execute(self):

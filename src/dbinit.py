@@ -27,6 +27,9 @@ ALTER COLUMN data TYPE character varying(255);
 """
     ],
     ["ALTER TABLE users ADD CONSTRAINT usernameunique UNIQUE (username);"],
+    ["ALTER TABLE competitions ADD CONSTRAINT titleunique UNIQUE (title);"],
+    ["ALTER TABLE chunks ALTER COLUMN data TYPE character varying(512);"],
+    ["ALTER TABLE chunks ADD COLUMN cdata character varying(512);"],
 ]
 
 

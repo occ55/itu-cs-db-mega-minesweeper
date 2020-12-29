@@ -1,164 +1,172 @@
 #game-view {
-  /* background-color: red; */
-  width: 80vh;
-  height: 80vh;
-  display: grid;
-  margin-top: 30px;
-  margin-left: 30px;
-  outline: 2px solid black;
-  grid-template-columns: 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh;
-  /* grid-template-rows: 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh; */
-  grid-auto-rows: 2vh;
-  overflow-y: scroll;
-  overflow-x: scroll;
+    /* background-color: red; */
+    width: 80vh;
+    height: 80vh;
+    display: grid;
+    margin-top: 30px;
+    margin-left: 30px;
+    outline: 2px solid black;
+    grid-template-columns: 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh;
+    /* grid-template-rows: 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh 2vh; */
+    grid-auto-rows: 2vh;
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .tile {
-  display: block;
-  border: 1px solid black;
-  background-color: #b0b0b0;
+    display: block;
+    border: 1px solid black;
+    background-color: #b0b0b0;
 }
 
-.t-mine {
-  background-color: #f5f5f5;
-  background-image: url("star.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+.t-0 {
+    background-color: #f5f5f5;
 }
 
-.t-flag {
-  background-color: #b0b0b0;
-  background-image: url("flag.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+.t-x {
+    background-color: #f5f5f5;
+    background-image: url("star.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
+.t-f {
+    background-color: #b0b0b0;
+    background-image: url("flag.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-.t-guess {
-  background-color: #b0b0b0;
-  background-image: url("guess.png");
-  background-repeat: no-repeat;
-  background-size: contain;
+.t-c {
+    background-color: #f5f5f5;
+    background-image: url("flag.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.t-g {
+    background-color: #b0b0b0;
+    background-image: url("guess.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .t-1 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-1::after {
-  content: "1";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: blue;
+    content: "1";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: blue;
 }
 
 .t-2 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-2::after {
-  content: "2";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: green;
+    content: "2";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: green;
 }
 
 .t-3 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-3::after {
-  content: "3";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: red;
+    content: "3";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: red;
 }
 
 .t-4 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-4::after {
-  content: "4";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: darkblue;
+    content: "4";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: darkblue;
 }
 
 .t-5 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-5::after {
-  content: "5";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: darkred;
+    content: "5";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: darkred;
 }
 
 .t-6 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-6::after {
-  content: "6";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: darkcyan;
+    content: "6";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: darkcyan;
 }
 
 .t-7 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-7::after {
-  content: "7";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: black;
+    content: "7";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: black;
 }
 
 .t-8 {
-  background-color: #f5f5f5;
-  text-align: center;
+    background-color: #f5f5f5;
+    text-align: center;
 }
 
 .t-8::after {
-  content: "8";
-  align-content: center;
-  text-align: center;
-  vertical-align: top;
-  line-height: normal;
-  font-weight: bold;
-  color: grey;
+    content: "8";
+    align-content: center;
+    text-align: center;
+    vertical-align: top;
+    line-height: normal;
+    font-weight: bold;
+    color: grey;
 }
-
-

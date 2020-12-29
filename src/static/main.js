@@ -1,15 +1,11 @@
-async function createTile() {
-  const el = document.createElement("div");
-  el.classList.add("tile");
-  return el;
+async function req(url, data) {
+  const result = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      credentials: "include",
+    },
+    body: JSON.stringify(data),
+  }).then((resp) => resp.json());
+  return result;
 }
-
-async function Main() {
-  const gameView = document.getElementById("game-view");
-
-  for (let k = 0; k < 10000; k++) {
-    //gameView.appendChild(await createTile());
-  }
-}
-
-Main().catch(console.log);
