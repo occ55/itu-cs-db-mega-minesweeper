@@ -5,34 +5,32 @@
 -- Dumped from database version 12.3 (Debian 12.3-1.pgdg100+1)
 -- Dumped by pg_dump version 12.2
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+--SET statement_timeout = 0;
+--SET lock_timeout = 0;
+--SET idle_in_transaction_session_timeout = 0;
+--SET client_encoding = 'UTF8';
+--SET standard_conforming_strings = on;
+--SELECT pg_catalog.set_config('search_path', '', false);
+--SET check_function_bodies = false;
+--SET xmloption = content;
+--SET client_min_messages = warning;
+--SET row_security = off;
 
-SET default_tablespace = '';
+--SET default_tablespace = '';
 
-SET default_table_access_method = heap;
+--SET default_table_access_method = heap;
 
 --
 -- Name: chunks; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.chunks (
+CREATE TABLE chunks (
     competition_id integer NOT NULL,
     x integer NOT NULL,
     y integer NOT NULL,
     data character varying(255)[] NOT NULL
 );
 
-
-ALTER TABLE public.chunks OWNER TO postgres;
 
 --
 -- Name: competitions; Type: TABLE; Schema: public; Owner: postgres
@@ -47,7 +45,6 @@ CREATE TABLE public.competitions (
 );
 
 
-ALTER TABLE public.competitions OWNER TO postgres;
 
 --
 -- Name: competitions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -62,7 +59,6 @@ CREATE SEQUENCE public.competitions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.competitions_id_seq OWNER TO postgres;
 
 --
 -- Name: competitions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -83,7 +79,6 @@ CREATE TABLE public.event_log (
 );
 
 
-ALTER TABLE public.event_log OWNER TO postgres;
 
 --
 -- Name: event_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -98,7 +93,6 @@ CREATE SEQUENCE public.event_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.event_log_id_seq OWNER TO postgres;
 
 --
 -- Name: event_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -122,7 +116,6 @@ CREATE TABLE public.flags (
 );
 
 
-ALTER TABLE public.flags OWNER TO postgres;
 
 --
 -- Name: guesses; Type: TABLE; Schema: public; Owner: postgres
@@ -138,7 +131,6 @@ CREATE TABLE public.guesses (
 );
 
 
-ALTER TABLE public.guesses OWNER TO postgres;
 
 --
 -- Name: sessions; Type: TABLE; Schema: public; Owner: postgres
@@ -150,7 +142,6 @@ CREATE TABLE public.sessions (
 );
 
 
-ALTER TABLE public.sessions OWNER TO postgres;
 
 --
 -- Name: user_entries; Type: TABLE; Schema: public; Owner: postgres
@@ -179,7 +170,6 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -193,7 +183,6 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO postgres;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
