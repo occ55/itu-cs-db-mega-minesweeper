@@ -59,6 +59,7 @@ def initialize(url):
         connection.commit()
         for k in range(version, len(MIGRATIONS)):
             for q in MIGRATIONS[k]:
+                print(q)
                 cursor.execute(q)
                 connection.commit()
             inc_version(cursor)
