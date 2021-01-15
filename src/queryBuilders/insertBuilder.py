@@ -30,6 +30,12 @@ class InsertBuilder:
     def Execute(self):
         return self.Build().Execute()
 
+    def ExecuteNoFail(self):
+        try:
+            return self.Build().Execute()
+        except Exception as e:
+            return e
+
 
 class BuiltInsertBuilder:
     def __init__(self, data, q):

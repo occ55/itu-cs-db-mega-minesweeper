@@ -13,7 +13,7 @@ now = lambda: time.time_ns() // 1000000
 chunk_size = 16
 map_size = 128
 map_chunk_ct = map_size // chunk_size
-mine_chance = 0.2
+mine_chance = 0.05
 
 
 def sanitize_competition(c):
@@ -437,7 +437,7 @@ def enter_competition(user_id):
         "user_entries",
         {"competition_id": competition_id, "user_id": user_id, "join_time": now()},
         False,
-    ).Execute()
+    ).ExecuteNoFail()
     return jsonify({"result": "Success"})
 
 
