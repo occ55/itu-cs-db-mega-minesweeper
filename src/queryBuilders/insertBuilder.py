@@ -34,6 +34,7 @@ class InsertBuilder:
         try:
             return self.Build().Execute()
         except Exception as e:
+            self.data["connection"].commit()
             return e
 
 

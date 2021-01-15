@@ -79,6 +79,7 @@ def get_chunk(user_id):
 @app.route("/api/open_tile", methods=["POST"])
 @entry_required
 def open_tile(user_id):
+    print("open tile started")
     x = request.json["x"]
     y = request.json["y"]
     competition_id = request.json["competition_id"]
@@ -100,6 +101,7 @@ def open_tile(user_id):
         )
         .Execute()
     )
+    print("open tile ended")
     return jsonify({"log_id": log_id})
 
 
