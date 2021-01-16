@@ -421,16 +421,14 @@ def enter_competition(user_id):
         data["password"] = None
 
     cid_holder = "{cid}"
-    pass_holder = "{password}"
+    # pass_holder = "{password}"
     comp_record = (
         QueryBuilder()
         .Select("competitions", "c", ["id", "password"])
         .AndWhere(
-            f"c.id = {cid_holder} and {'c.password is null' if data['password'] is None else 'c.password = {password_holder}'}",
+            f"c.id = {cid_holder} and {'c.password is null' if data['password'] is None else 'c.password = {password}'}",
             {"cid": competition_id, "password": data["password"]},
         )
-        .Build()
-        .Explain()
         .ExecuteOne()
     )
     if comp_record is None:
@@ -441,6 +439,31 @@ def enter_competition(user_id):
         False,
     ).ExecuteNoFail()
     return jsonify({"result": "Success"})
+
+
+@app.route("/api/delete_competition", methods=["GET", "POST"])
+@login_required
+def delete_competition(user_id):
+    data = request.json
+    QueryBuilder().Delete("user_entries").AndWhere(
+        "competition_id = {cid}", {"cid": data["competition_id"]}
+    ).Execute()
+    QueryBuilder().Delete("flags").AndWhere(
+        "competition_id = {cid}", {"cid": data["competition_id"]}
+    ).Execute()
+    QueryBuilder().Delete("guesses").AndWhere(
+        "competition_id = {cid}", {"cid": data["competition_id"]}
+    ).Execute()
+    QueryBuilder().Delete("chunks").AndWhere(
+        "competition_id = {cid}", {"cid": data["competition_id"]}
+    ).Execute()
+    QueryBuilder().Delete("event_log").AndWhere(
+        "competition_id = {cid}", {"cid": data["competition_id"]}
+    ).Execute()
+    QueryBuilder().Delete("competitions").AndWhere(
+        "id = {cid}", {"cid": data["competition_id"]}
+    ).Execute()
+    return "{}"
 
 
 def reveal_tile(game_map, closed_map, x, y, competition_id, user_id, mutation_list):

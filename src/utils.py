@@ -30,6 +30,32 @@ def login_required(f):
     return decorated_function
 
 
+last_error = None
+
+
+def EP(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        global last_error
+        try:
+            kwargs["last_error"] = last_error
+            result = f(*args, **kwargs)
+            return result
+        except Exception as e:
+            last_error = str(e)
+            if request.url != "/":
+                return redirect("/")
+            else:
+                raise RuntimeError("Main Page Error")
+
+    return decorated_function
+
+
+def set_last_error(val):
+    global last_error
+    last_error = val
+
+
 def login_optional(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

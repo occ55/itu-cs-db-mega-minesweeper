@@ -1,5 +1,4 @@
-{% extends "mainLayout.html" %}
-{% block content %}
+{% extends "mainLayout.html" %} {% block content %}
 
 <table class="highlight">
   <thead>
@@ -9,74 +8,74 @@
       <th>Time Left</th>
       <th>Password?</th>
       <th>Join</th>
+      <th>Delete</th>
     </tr>
   </thead>
 
-  <tbody id="table_body">
-    <!-- <tr> -->
-    <!--   <td>Alvin</td> -->
-    <!--   <td>Eclair</td> -->
-    <!--   <td>$0.87</td> -->
-    <!-- </tr> -->
-    <!-- <tr> -->
-    <!--   <td>Alan</td> -->
-    <!--   <td>Jellybean</td> -->
-    <!--   <td>$3.76</td> -->
-    <!-- </tr> -->
-    <!-- <tr> -->
-    <!--   <td>Jonathan</td> -->
-    <!--   <td>Lollipop</td> -->
-    <!--   <td>$7.00</td> -->
-    <!-- </tr> -->
-  </tbody>
+  <tbody id="table_body"></tbody>
 </table>
 
-
 <script>
-  const is_logged_in = !!"{{data.user.id}}"
+  const is_logged_in = !!"{{data.user.id}}";
   async function comps_table() {
     const comps = await req("/api/get_competitions", {});
-    const comps_p = comps.map(c => {
+    const comps_p = comps.map((c) => {
       const tl = c.end - Date.now();
       return {
         title: c.title,
-        start: (new Date(c.start)).toString(),
+        start: new Date(c.start).toString(),
         time_left: `${(tl / 1000 / 60).toFixed(1)} Minutes`,
         password: !!c.password,
-        id: c.id
-      }
+        id: c.id,
+      };
     });
     const tb = document.querySelector("#table_body");
     for (const c of comps_p) {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${c.title}</td> <td>${c.start}</td> <td>${c.time_left}</td> <td>${c.password ? `<input></input>` : `None`
-        }</td> <td><a id="join-${c.id}" class="waves-effect waves-light btn">Join</a></td>`;
+      tr.innerHTML = `<td>${c.title}</td> <td>${c.start}</td> <td>${
+        c.time_left
+      }</td> <td>${
+        c.password ? `<input></input>` : `None`
+      }</td> <td><a id="join-${
+        c.id
+      }" class="waves-effect waves-light btn">Join</a></td> <td><a id="delete-${
+        c.id
+      }" class="waves-effect waves-light btn">Delete</a></td>`;
       tb.appendChild(tr);
 
       const btn = document.querySelector(`#join-${c.id}`);
+      const dbtn = document.querySelector(`#delete-${c.id}`);
       if (!is_logged_in) {
         btn.innerHTML = "Please Log In";
         btn.classList.add("disabled");
-        return;
+        dbtn.style.display = "none";
+        continue;
       }
       btn.addEventListener("click", async () => {
         try {
           const res = await req("/api/enter_competition", {
-            competition_id: c.id, password: c.password ? tr.querySelector("input").value : null
+            competition_id: c.id,
+            password: c.password ? tr.querySelector("input").value : null,
           });
           if (res.result == "Success") {
-            window.location.href = `/competition_page?cid=${c.id}`
+            window.location.href = `/competition_page?cid=${c.id}`;
           } else {
             alert("Wrong Password");
           }
         } catch (ex) {
           console.log("Already Joined");
-          window.location.href = `/competition_page?cid=${c.id}`
+          window.location.href = `/competition_page?cid=${c.id}`;
         }
+      });
+      dbtn.addEventListener("click", async () => {
+        try {
+          await req("/api/delete_competition", { competition_id: c.id });
+        } catch {}
+        window.location.reload();
       });
     }
   }
-  comps_table().catch(console.log)
+  comps_table().catch(console.log);
 </script>
 
 {% endblock %}

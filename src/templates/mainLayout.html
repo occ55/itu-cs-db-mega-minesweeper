@@ -36,6 +36,17 @@
     }
   </script>
 
+  {% if last_error %}
+  <p>Error: {{last_error}}</p>
+  <a class="waves-effect waves-light btn" id="clear_btn">X</a>
+  <script>
+    const cbtn = document.querySelector("#clear_btn");
+    cbtn.addEventListener("click",async () => {
+        await req("/api/clear_error", {});
+        window.location.reload()
+    })
+  </script>
+  {% endif %}
   <div id="content" style="display: flex;">{% block content %}{% endblock %}</div>
 
 </body>

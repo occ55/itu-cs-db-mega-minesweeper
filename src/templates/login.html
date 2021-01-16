@@ -1,46 +1,58 @@
-{% extends "mainLayout.html" %}
-{% block content %}
-  
+{% extends "mainLayout.html" %} {% block content %}
+
+<div style="width: 100%">
   <div class="row">
     <div class="col s3"></div>
     <div class="input-field col s6">
-      <input value="" id="username" type="text" class="validate">
+      <input value="" id="username" type="text" class="validate" />
       <label class="active" for="username">Username</label>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col s3"></div>
     <div class="input-field col s6">
-      <input value="" id="password" type="password" class="validate">
+      <input value="" id="password" type="password" class="validate" />
       <label class="active" for="password">Password</label>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col s3"></div>
     <a class="waves-effect waves-light btn col s2" id="login_btn">Login</a>
     <div class="col s2"></div>
-    <a class="waves-effect waves-light btn col s2" id="register_btn">Register</a>
+    <a class="waves-effect waves-light btn col s2" id="register_btn"
+      >Register</a
+    >
   </div>
+</div>
 
-  <script>
-    const login_b = document.querySelector("#login_btn");
-    const register_b = document.querySelector("#register_btn");
+<script>
+  const login_b = document.querySelector("#login_btn");
+  const register_b = document.querySelector("#register_btn");
 
-    const username_in = document.querySelector("#username");
-    const password_in = document.querySelector("#password")
+  const username_in = document.querySelector("#username");
+  const password_in = document.querySelector("#password");
 
-    login_b.addEventListener("click", async () => {
-      await req("/api/login", {username: username_in.value, password: password_in.value});
-      window.location.href = "/"
-    })
+  login_b.addEventListener("click", async () => {
+    try {
+      await req("/api/login", {
+        username: username_in.value,
+        password: password_in.value,
+      });
+    } catch {}
+    window.location.href = "/";
+  });
 
-    register_b.addEventListener("click", async () => {
-      await req("/api/register", {username: username_in.value, password: password_in.value});
-      window.location.href = "/"
-    })
-
-  </script>
+  register_b.addEventListener("click", async () => {
+    try {
+      await req("/api/register", {
+        username: username_in.value,
+        password: password_in.value,
+      });
+    } catch {}
+    window.location.href = "/";
+  });
+</script>
 
 {% endblock %}

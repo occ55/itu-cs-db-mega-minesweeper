@@ -7,7 +7,8 @@ from ..utils import *
 
 
 @app.route("/api/login", methods=["POST"])
-def login():
+@EP
+def login(last_error):
     data = request.json
     if "password" in data:
         data["password"] = hashlib.sha256(bytes(data["password"], "utf-8")).hexdigest()
@@ -55,7 +56,9 @@ def login():
 def register():
     session_id_old = request.cookies.get("session_id")
     if session_id_old is not None:
-        return jsonify({"error": "Already logged in"})
+        QueryBuilder().Delete("sessions").AndWhere(
+            "session_id = {sid}", {"sid": session_id_old}
+        ).Execute()
     data = request.json
     if "password" in data:
         data["password"] = hashlib.sha256(bytes(data["password"], "utf-8")).hexdigest()
@@ -92,3 +95,29 @@ def me(user_id):
         .ExecuteOne()
     )
     return jsonify(user)
+
+
+@app.route("/api/clear_error", methods=["GET", "POST"])
+def clear_error():
+    set_last_error(None)
+    return "{}"
+
+
+@app.route("/api/delete_me", methods=["GET", "POST"])
+@EP
+@login_required
+def delete_me(user_id, last_error):
+    QueryBuilder().Delete("sessions").AndWhere(
+        "user_id = {uid}", {"uid": user_id}
+    ).Execute()
+    QueryBuilder().Delete("user_entries").AndWhere(
+        "user_id = {uid}", {"uid": user_id}
+    ).Execute()
+    QueryBuilder().Delete("flags").AndWhere(
+        "user_id = {uid}", {"uid": user_id}
+    ).Execute()
+    QueryBuilder().Delete("guesses").AndWhere(
+        "user_id = {uid}", {"uid": user_id}
+    ).Execute()
+    QueryBuilder().Delete("users").AndWhere("id = {uid}", {"uid": user_id}).Execute()
+    return "{}"
