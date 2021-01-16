@@ -5,6 +5,10 @@ import hashlib
 import os, binascii
 from ..utils import *
 
+import time
+
+now = lambda: time.time_ns() // 1000000
+
 
 @app.route("/api/login", methods=["POST"])
 @EP
@@ -53,7 +57,8 @@ def login(last_error):
 
 
 @app.route("/api/register", methods=["POST"])
-def register():
+@EP
+def register(last_error):
     session_id_old = request.cookies.get("session_id")
     if session_id_old is not None:
         QueryBuilder().Delete("sessions").AndWhere(
@@ -61,10 +66,20 @@ def register():
         ).Execute()
     data = request.json
     if "password" in data:
+        if len(data["password"]) < 2:
+            raise RuntimeError("Password is too short")
+    if "password" in data:
         data["password"] = hashlib.sha256(bytes(data["password"], "utf-8")).hexdigest()
     user_id = (
         QueryBuilder()
-        .Insert("users", {"username": data["username"], "password": data["password"]})
+        .Insert(
+            "users",
+            {
+                "username": data["username"],
+                "password": data["password"],
+                "created_at": now(),
+            },
+        )
         .Execute()
     )
     session_id = binascii.b2a_hex(os.urandom(32)).decode("utf-8")

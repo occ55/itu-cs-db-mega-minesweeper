@@ -33,6 +33,13 @@ ALTER COLUMN data TYPE character varying(255);
     ["ALTER TABLE event_log DROP COLUMN user_id;"],
     ["ALTER TABLE user_entries ADD COLUMN last_ability_used bigint;"],
     ["ALTER TABLE competitions ADD COLUMN is_done integer;"],
+    [
+        "ALTER TABLE users ADD COLUMN created_at bigint;",
+        "ALTER TABLE users ADD COLUMN theme integer DEFAULT 0;",
+        "ALTER TABLE flags ADD COLUMN color character varying(255) DEFAULT 'default';",
+        "ALTER TABLE flags ADD COLUMN bg_color character varying(255) DEFAULT 'default';",
+        "ALTER TABLE flags ADD COLUMN icon_color character varying(255) DEFAULT 'default';",
+    ],
 ]
 
 

@@ -11,4 +11,4 @@ from src.periodic import *
 
 if __name__ == "__main__":
     sys.setrecursionlimit(32000)
-    app.run(debug=True)
+    app.run()
